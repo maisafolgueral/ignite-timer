@@ -9,10 +9,6 @@ export function History() {
         <HistoryContainer>
             <h1>Meu histórico</h1>
 
-            <pre>
-                {JSON.stringify(cycles, null, 2)}
-            </pre>
-
             <HistoryList>
                 <table>
                     <thead>
@@ -24,46 +20,28 @@ export function History() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Tarefa 1</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 meses</td>
-                            <td>
-                                <Status statusColor="green">Concluído</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 2</td>
-                            <td>20 minutos</td>
-                            <td>Há cerca de 2 semanas</td>
-                            <td>
-                                <Status statusColor="yellow">Em andamento</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 3</td>
-                            <td>50 minutos</td>
-                            <td>Há cerca de 5 meses</td>
-                            <td>
-                                <Status statusColor="green">Concluído</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 4</td>
-                            <td>10 minutos</td>
-                            <td>Há cerca de 1 semana</td>
-                            <td>
-                                <Status statusColor="red">Interrompido</Status>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tarefa 5</td>
-                            <td>30 minutos</td>
-                            <td>Há cerca de 8 meses</td>
-                            <td>
-                                <Status statusColor="yellow">Em andamento</Status>
-                            </td>
-                        </tr>
+                        {cycles.map(cycle => {
+                            return (
+                                <tr key={cycle.id}>
+                                    <td>{cycle.task}</td>
+                                    <td>{cycle.minutesAmount} minutos</td>
+                                    <td>{cycle.startDate.toISOString()}</td>
+                                    <td>
+                                        {cycle.finishedDate && (
+                                            <Status statusColor="green">Concluído</Status> 
+                                        )}
+
+                                        {cycle.interruptedDate && (
+                                            <Status statusColor="red">Interrompido</Status> 
+                                        )}
+
+                                        {(!cycle.finishedDate && !cycle.interruptedDate) && (
+                                            <Status statusColor="yellow">Em andamento</Status> 
+                                        )}
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </HistoryList>
